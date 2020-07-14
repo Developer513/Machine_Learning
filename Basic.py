@@ -166,13 +166,24 @@ cooler_add_ints(3,5)
 # 여러개의 데커레이터를 가질 수도 있다. 
 # 데커레이터가 하나 이상이면 자동을 할당할 때는 함수선언부에서 가까운 순 document_it() 먼저 실행 된다. 
 
+
 word = 'bye'
 def hello_printer():
-    print(word)
     word = 'hello'
     print(word)
+    print(word)
 hello_printer()
+# 파이썬에서 들여쓰기 하지 않고 선언한 변수는 전역변수이다. 
+# 전역변수는 메서드 내에서 기본적으로 수정할 수 없지만 global 키워드를 사용하면
+# 전역변수에 접근 할 수 있다. 
 
+animal = 'fruit'
+def change_and_print_global():
+    global animal
+    animal =  'wombat'
+    print('inside change_and_print_global:',animal)
+change_and_print_global()
+####################################################################################################################################
 # 파이썬에서의 예외처리 
 short_list = [1,2,3]
 position = 5
@@ -186,17 +197,172 @@ class NotThreeMultipleError(Exception):    # Exception을 상속받아서 새로
     def __init__(self):                    # 숫자 입력
         super().__init__('3의 배수가 아닙니다.')
  
-def three_multiple():
-    try:
-        x = int(input('3의 배수를 입력하세요: '))
-        if x % 3 != 0:                     # x가 3의 배수가 아니면
-            raise NotThreeMultipleError    # NotThreeMultipleError 예외를 발생시킴
-        print(x)
-    except Exception as e:
-        print('예외가 발생했습니다.', e)
- 
-three_multiple()
+# def three_multiple():
+#    try:
+#        x = int(input('3의 배수를 입력하세요: '))
+#        if x % 3 != 0:                     # x가 3의 배수가 아니면
+#            raise NotThreeMultipleError    # NotThreeMultipleError 예외를 발생시킴
+#        print(x)
+#    except Exception as e:
+#        print('예외가 발생했습니다.', e)
+# three_multiple()
+# 람다: 파이썬에서 람다(lamda) 는 런타임에서 생성해서 사용할 수 있는 익명함수이다.
+# 필요한 곳에서 간단한 기능을 일시적으로 호출해 쓸수 있고 즉시 버릴 수 있다. 
+square = lambda int_num : int_num**2 # 거듭제곱 기능
+# 함수이름 = lambda 파라미터(여러개 사용가능) : 기능구현부분 
+# square(5) = 25
+# 사용예시
+def inc(n):
+    return lambda x:x+n
+f = inc(2) # f에 파라미터 값에 2를 더하는 람다식 저장 
+g = inc(4) # g에 파라미터 값에 4를 더하는 람다식 저장 
+print(f(12)) # 12+2 결과 출력 
+print(g(12)) # 12+4 결과 출력
+print(inc(2)(12)) # 람다식을 변수에 저장하지 않고 바로 사용
+# 12+2 결과 출력 
+# map() 함수 map(함수, 객체(리스트, 튜플,...))
+# map() 함수는 어떤 객체의 모든 요소를 파라미터로 가지는 함수를 적용시킬 수 있는 함수이다. 
+a = [1,2,3,4,5] # 인덱스가 대응되는 요소들 까지만 계산된다. 
+b = [11,12,13,14]
+print(list(map(lambda x,y:x+y,a,b))) # a,b 각 리스트 내의 인덱스에 대응되는 요소들에 대해 람다연산을 수행
+# 결과 
+####################################################################################################################################
 # 모듈과 패키징
 # 모듈이란 파이썬의 정의와 문장들을 담고있는 파일이다. 
-# 
-# 파이썬 표준 라이브러
+import module_import_test #import [파일명]
+module_import_test.import_confirm() # 모듈내부 함수에 접근할 때 
+# for 
+# module_path i module_import_test.path:
+#    print(module_path)
+g = inc(4)
+print(f(12))
+print(g(12))
+print(inc(2)(12))
+# import는 자바와는 다르게 함수 안에서도 사용할 수 있다. 
+# def import_in_method()
+#   import moule_import_test
+#   module_import_test.import_confirm()
+# 만약 불러올 모듈을 자주 사용하거나 파일 이름이 길 때 생산성을 높이기 위해 모듀파일을 다른 형식으로 
+# 호출 할 수도 있다
+# import module_import_test as mptath)
+# import는 자바와는 다르게 함수 안에서도 사용할 수 있다. 
+# def import_in_method()
+#   import moule_import_test
+#   module_import_test.import_confirm()
+# 만약 불러올 모듈을 자주 사용하거나 파일 이름이 길 때 생산성을 높이기 위해 모듀파일을 다른 형식으로 
+# 호출 할 수도 있다
+# import module_import_test as mpt
+# mpt.import_confirm()
+# 또한 모듈이 속한 파일에서 해당 모듈만 import 하여 메모리 효율을 높일 수 있다. 
+# 자바에서 특정 패키지 내부에 있는 클래스를 쓸때 *애스터 리스크를 잘 안쓰는 것 처럼 파이썬은 함수까지 지정할 수 있다  
+# 파이썬 표준 라이브러리 추가 라이브러리 설치없이 파이썬에서 기본적으로 제공하는 기능들
+# OrderedDict()
+from collections import OrderedDict
+dic = OrderedDict({'a':1,'n':5,'b':2}) # 딕셔너리는 요소들 간의 순서관계가 없다 
+print(dic) # OrderedDict 은 사용자가 입력한순서로  정렬을 해준다. 
+# itertools 
+#from collections import itertools
+# for item itertools.chain([])
+# 스택 + 큐 = 데크
+def palidrome(word):
+    from collections import deque
+    dq = deque(word)
+    while len(dq) > 1:
+        if dq.popleft() != dq.pop():
+            return False
+    return True
+print(palidrome('specific'))
+
+plain = {'a':1,'b':2,'c':3}
+from collections import OrderedDict
+fancy = OrderedDict(plain)
+##############################################################################################################
+# 파이썬에서 동일한 속성값을 가지는 객체를 여러가지 가질수 있다. 
+# 객체는 메소드는 변하지 않고 속성값은 변할 수 있다.
+# 객체를 만들기 위해서는 클래스라는 개념이 필요하다. 
+# 객체는 클래스라는 설계도를 이용해서 만든 제품이 객체이다. 
+class Bottle(): # 클래스 선언 
+    def __init__(self,name,date) : # 객체초기화 객체가 선언될 때  자동으로 작동 
+        self.name = name
+        self.date = date
+bottle = Bottle('black_bottle',21) # bottle 객체 선언  
+# 상속 기존에 존재하는 클래스에서 내가 기능을 추가하고 싶을때  클래스를 새로 만들지 않고도 기능을 추가하거나 수정 할 수 있다. 
+# 오버라이딩(재정의): 기존메소드를 새로 수정하는것
+# 오버로딩: 기존 메소드에서 기능추가 파이썬에서는 기본적으로 메소드 오버로딩을 지원하지 않는다 
+# 자동차 라는 클래스가 있다. 자동차 클래스는 자동차에서 필요한 필수적인 구성요(프레임, 유리, 엔진, 바퀴 등)
+# 다마스 라는 클래스를 만드려고 하면 자동차라는 클래스를 상속하여 사용한다.
+# 하지만 다마스 라는 차의 특성에 따라 추가해야할 요소들이 있다. (슬라이드 도어, 엔진용량, 차체높이 등) 
+# 파이썬에서는 클래스 내부의 인스턴스 메소드의 선언부에 파라미터로 self 를 포함 할 것을 권장한다.
+class Car():
+    def __init__(self,car_number):
+        self.car_number = car_number
+    def car_layout(self):
+        engine = 'v4'
+        door = '4door'
+        transmission = 'manual'
+        tire = 4
+    def option(self):
+        rear_sensor = 'include'
+        navigation = 'include'
+        cruser_mode = 'include'
+
+#Car를 상속한 Damas 클래스
+class Damas(Car):
+    # 초기화(__init__) 함수도 오버라이드 해서 사용할 수 있다.
+    def car_layout(self): #부모클래스의 메소드를 오버라이딩(재정의)
+        engine = '700cc'
+        door = 'slide door'
+        transmission = 'auto'
+        tire = 4   
+    def option(self): 
+        super().option(self) # 부모클래스의 option 메소드를 호출하여 그 결과 값에다가 최대 적재중량을 추가하는 메소드 
+        ruggage = 'max 200kg'
+
+# 파이썬에서는 객체지향 프로그램의 주요 기능 중 하나인 정보의 은닉을 지원하지 않는다. 
+# 즉 외부에서 내부 변수 데이터 값을 직접 조회하거나 수정할 수 없어야 하는데 파이썬에서는 지원하지 않는다.
+# 파이썬에서는 모든 속성과 메소드는 public 이다. 
+# 다만 직접 접근할수 없게 설정할 수는 있다. 
+class Duck():
+    def __init__(self, input_name):
+        self.hidden_name = input_name
+    def get_name(self):
+        print('inside the getter')
+        return self.hidden_name
+    def set_name(self, input_name):
+        print('inside the setter')
+        self.hidden_name = input_name
+    name = property(get_name, set_name) # name의 프로퍼티(속성) 으로써 위의 메소드들로 지정해 줌으로 클래스의 속성(hidden_name)에 직접 접근하지 않고도 값을 조회할 수 있다. 
+    
+pet_duck = Duck('speed_runner') # 클래스의 개게 인스턴스 pet_duck 을 생성자 'speed_runner'로 선언함
+print(pet_duck.name) # pet_duck 인스턴스의 프로퍼티 name에 접근했을시 클래스 선언부에서 파라미터 형식에 맞는 메소드 get_name을 호출하여 결과는 'speed_runner'가 호출된다. 
+pet_duck.get_name() # 클래스 내부의 메소드를 직접 호출할  수도 있다. 
+pet_duck.name = 'The_chosen_one' # 이 표현은 마치 외부에서 객체 인스턴스의 프로퍼티를 직접 수정하는것 처럼 보이는데 실제 로는 클래스 선언부의 마지막 부분의 
+print(pet_duck.name)
+#  name 이라는 프로퍼티가 set_name 이라는 메소드를 호출하고 있으므로 실제 인스턴스의 프로퍼티인 hidden_name에는 접근하지 않는다. 
+
+# 위와 같은 방법 이외에도 데커레이터를 이용하면 더 간단하게 사용할 수 있다. 
+class Duck2():
+    def __init__(self, input_name):
+        self.hidden_name = input_name
+    @property
+    def name(self):
+        print('inside the getter')
+        return self.hidden_name
+    @name.setter
+    def name(self, input_name):
+        print('inside the setter')
+        self.hidden_name = input_name
+
+
+
+
+
+# 네임드 튜플 오프셋으로만 접근할 수 있는 원래튜플을 각 오프셋에 특정 이름을 부여하여 그 이름으로 접근할 수 있다. 
+# tuple = ('Donald',63,'USA)
+# tuple[0] = 'Donald'
+# from collections nametuple
+# Person = nametuple('Person', 'age', 'nation')
+# person = Person('Donald',63,'USA')
+# preson.Person = 'Donald'
+
+
