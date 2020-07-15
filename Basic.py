@@ -353,10 +353,6 @@ class Duck2():
         print('inside the setter')
         self.hidden_name = input_name
 
-
-
-
-
 # 네임드 튜플 오프셋으로만 접근할 수 있는 원래튜플을 각 오프셋에 특정 이름을 부여하여 그 이름으로 접근할 수 있다. 
 # tuple = ('Donald',63,'USA)
 # tuple[0] = 'Donald'
@@ -364,5 +360,67 @@ class Duck2():
 # Person = nametuple('Person', 'age', 'nation')
 # person = Person('Donald',63,'USA')
 # preson.Person = 'Donald'
+# 파이썬의 유니코드데이터 모듈은 식별자와 이름으로 검색할 수 있는 함수를 제공한다.
+def unicode_test(value):
+    import unicodedata
+    name = unicodedata.name(value) # 인자로 유니코드 문자를 취하고 대문자 이름을 반환한다.
+    value2 = unicodedata.lookup(name)# 대소문자를 구분하지 않는 인자를 취하고 유니코드 문자를 반환한다.
+    print('value= "%s", name= "%s", value2 = "%s"'%(value, name, value2))
+# 딩벳기호 snow man
+unicode_test('\u2603') # value= "%s", name= "%s", value2 = "%s" A LATIN CAPITAL LETTER A A
+# 혹시나 특수기호를 표현할 일이 있으면 유니코드 기호를 찾아보면 된다,
+# place = caf\u00e9 => cafe
+# UTF-8 인코딩과 디코딩 
+snowman = '\u2603'
+ds = snowman.encode('utf-8') #  유니코드 문자를 UTF-8 로 인코딩한다 반환은 바이트 형식으로 반환하고 len(ds) = 3이다 
+print(ds)
+# 왠만하면 인코딩 형식은 utf-8로 사용할 것을 권장한다. 
+# 파이썬에서의 포맷형식
+# 파이썬에서는 c와 비슷한 방식의 포맷형식을 지원한다.
+# '%s' % 42 -> '42' 등 포맷형식은 c와 같지만 표현방식이 다르다 
+# 파이썬에서는 출력문자 배치를 쉽게하기 위한 편리한 기능을 제공한다.
+n=10
+f=7.3
+s='hey'
+print('%d %f %s' % (n,f,s) )
+# 출력결과 
+# 10 7.300000 hey  요소사이는 1칸의 공백이 있고 실수는 소수점 6번째 자리까지 출력된다. 
+print('%10d %10f %10s' % (n,f,s))
+# 각 변수마다 최소 10자리를 할당하고 오른쪽으로 정렬한다. 
+print('%-10d %-10f %-10s' % (n,f,s))
+# 각 변수마다 최소 10자리를 할당하고 왼쪽으로 정렬한다. 
+print('%-10.4d %-10.4f %-10.4s' % (n,f,s))
+# 각 변수마다 최소 10자리를 할당하고 왼쪽으로 정렬하는데 최대 4자리까지 출력한다. 
+# 위와같은 방식 이외에 파이썬은 다른스타일의 포매팅을 제공한다.
+print('{} {} {}'.format(n,f,s)) # 이때 각 중괄호 한에 n,f,s 순으로 들어간다. 
+# format() 안에 요소를 넣으면 각 요소는 오프셋을 가진다 따라서 
+print('{2} {1} {0}'.format(n,f,s)) # 이렇게 순서를 바꾸어서 출력할 수도 있다.
+# 딕셔너리 처럼 오프셋 대신 인자를 지정할 수도 있다
+print('{age} {gender} {military_discharged}'.format(age = 14, gender = 'female', military_discharged = 'yes'))
+# 딕셔너리를 만들어 보자 
+dic = {old:17, gender:'female', tall:162.12, division:'17th infantry div'}
+# 이렇게 출력할 수도 있다.
+print('{old}{gender}{tall}{division}'.format(dic))
+#'{0:!^20}'.format('SALE') !!!!!!!!SALE!!!!!!!!
 
-
+# 파이썬 정규표현식 
+# 프로그래밍 언어에서 내가 어떤 패턴을 표현할 건지 지정하는것 
+# 어떠한 패턴을 가진 문장을 특정 연산을 수행할때 
+# 기본 제공 메소드 re.match('문장에서 첫번째로 시작하는 단어',Young person)
+# re.match('You','You are person') # 매치가 된다면 매치가 되는 단어를 반환한다. 매칭되는것이 없다면 출력되는 결과물이 없다. 
+# 또다른 방법
+# pattern = re.compile('You')
+# pattern.match('You are person')
+# 또다른 방법
+# re.search('ers','You are person') #두번째 파라미터의 문자열에서 'ers' 가 존재하는지 판별하고 반환 
+# 만약 한 문자열에 찾는 문자열이 여러개 있을 때는 하나만 반환한다.
+# re.findall('o','You are person')
+# 일치하는 문자열을 리스트 형태로 반환한다. 
+# list.len  같은걸로 개수를 파악 할 수 있음 
+# re.findall('o.','You are person) o. 다음 문자열에서 o 다음에 오는 한글자(줄바꿈 문자를 포함 x)를 리스트 형태로 반환 (정규표현식)
+# o? 라고 하면 o뒤에 문자가 있으면 반환 없으면 반환하지 않음
+# re.split('e','You are person) 다음문장을 문자e 를 기준으로 자름 
+# re.split('e','k','You are person') 스플릿에서 원하는 문자로 대체 시켜서 자를수도 있다. 
+# str = '0123abc'
+# re.finall('\d',str)
+# 패턴 지정자 
