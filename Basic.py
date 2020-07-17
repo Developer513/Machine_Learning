@@ -398,13 +398,21 @@ print('{2} {1} {0}'.format(n,f,s)) # 이렇게 순서를 바꾸어서 출력할 
 # 딕셔너리 처럼 오프셋 대신 인자를 지정할 수도 있다
 print('{age} {gender} {military_discharged}'.format(age = 14, gender = 'female', military_discharged = 'yes'))
 # 딕셔너리를 만들어 보자 
-dic = {old:17, gender:'female', tall:162.12, division:'17th infantry div'}
+dic = {'old':17, 'gender':'female', 'tall':162.12, 'division':'17th infantry div'}
 # 이렇게 출력할 수도 있다.
-print('{old}{gender}{tall}{division}'.format(dic))
+print('{0[old]} {0[gender]} {0[tall]} {0[division]}'.format(dic))
+# format 의 인자로 딕셔너리를 넣었다. 따라서 중괄호 내에서 딕셔너리에 접근할 수 있는 오프셋은 0이다(하나밖에 없음)
+print('{0[old]} {0[gender]} {0[tall]} {0[division]}'.format(dic))
+print('{2:>10s} {1:>10f} {0:>10d}'.format(n,f,s))# 오른쪽 정렬 
 #'{0:!^20}'.format('SALE') !!!!!!!!SALE!!!!!!!!
+# 가운데 최소 20칸을 할당하여 문자를 출력하는데 가운데 정렬하고 나머지 부분은 ! 로 대체한다. 
 
 # 파이썬 정규표현식 
-# 프로그래밍 언어에서 내가 어떤 패턴을 표현할 건지 지정하는것 
+# 정규표현식이란 문자열을 처리하는 방법 중 하나로 특정한 조건의 문자를 검색하거나 치환하는 관정을 
+# 매우 간편하게 처리 할 수 있도록 하는 수단이다. 
+import re # 파이썬은 정규표현식 표준모듈을 제공한다. 
+result = re.match('You', 'Young Frankenstein') 
+# You 는 패턴이고 두번째로 입력된 소스 문자열에서 패턴일치 여부를 확인한다. 
 # 어떠한 패턴을 가진 문장을 특정 연산을 수행할때 
 # 기본 제공 메소드 re.match('문장에서 첫번째로 시작하는 단어',Young person)
 # re.match('You','You are person') # 매치가 된다면 매치가 되는 단어를 반환한다. 매칭되는것이 없다면 출력되는 결과물이 없다. 
