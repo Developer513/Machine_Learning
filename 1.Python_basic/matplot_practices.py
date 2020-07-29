@@ -37,3 +37,17 @@ plt.title("라인 플롯에서 여러개의 선 그리기",fontdict=font1)
 plt.plot(t,t,'r--', t,0.5*t**2,'bs:', t,0.2*t**3,'g^-')
 # x축, y축 t , 붉은 점선으로 표시, x축 t y축 t제곱*0.5 파란
 plt.show()
+
+X = np.arange(2)
+Y = np.random.randint(0,20,20)
+S = np.abs(np.random.randn(20))*100
+C = np.random.randint(0,20,20)
+
+scatter = plt.scatter(X,Y,s=S,c=C, label='A')
+plt.xlim(X[0]-1,X[-1]+1)
+plt.ylim(np.min(Y-1),np.max(Y+1))
+
+plt.title('scatter',pad=10)
+plt.xlabel('X axis',labelpad=10)
+plt.ylabel('Y axis',labelpad=10)
+plt.xticks(np.linspace)

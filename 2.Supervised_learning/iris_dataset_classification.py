@@ -7,11 +7,14 @@ import numpy  as np
 #f = open('')
 
 iris = load_iris() # sample dataset load
-print(iris.data)
+# load_iris() 가 반환한 객체는 파이썬의 딕셔너리와 유사한 객체이다.
+print('iris feature',iris.data)
+# data 에는 각 꽃의 특성(feature)가 담겨있다. 
 print(iris.keys)
+print("iris_dataset의 키: \n{}".format(iris.keys()))
 features = iris.data
 features_names = iris.feature_names
-target = iris.target
+target = iris.target 
 target_names = iris.target_names
 
 x_index = 0
